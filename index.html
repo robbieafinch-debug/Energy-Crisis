@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Energy & Resilience Signal Dashboard · Prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #14202E;
+  --ink-soft: #3A4A5C;
+  --ink-fade: #6B7785;
+  --rule: #D9D3C7;
+  --rule-soft: #ECE7DD;
+  --bg: #F6F2E9;
+  --surface: #FFFFFF;
+  --green: #046A38;
+  --green-soft: #E4EFE7;
+  --amber: #B7611C;
+  --amber-soft: #F9E9D4;
+  --warn: #F2D24A;
+  --warn-soft: #FDF5D4;
+  --brand: #046A38;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'Open Sans', sans-serif; color: var(--ink); background: var(--bg); font-size: 15px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+
+/* Prototype banner --- always visible */
+.banner {
+  background: var(--warn-soft);
+  border-bottom: 1px solid var(--warn);
+  padding: 10px 28px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+.banner .left { display: flex; gap: 22px; align-items: center; }
+.banner .pill { background: var(--ink); color: var(--bg); padding: 3px 10px; border-radius: 2px; font-size: 10px; letter-spacing: 0.18em; }
+
+/* Header */
+header {
+  padding: 38px 48px 28px;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.title-block .eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-fade);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.title-block h1 {
+  font-size: 32px;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+.title-block h1 strong { font-weight: 600; }
+
+.header-meta { display: flex; gap: 32px; align-items: flex-end; }
+.meta-item { text-align: right; }
+.meta-item .label { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-fade); margin-bottom: 2px; }
+.meta-item .value { font-family: 'IBM Plex Mono', monospace; font-size: 15px; color: var(--ink); font-weight: 500; }
+
+/* Mode toggle */
+.toggle {
+  display: inline-flex;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.toggle button {
+  background: transparent;
+  border: none;
+  padding: 8px 16px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-fade);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.toggle button:hover { color: var(--ink); }
+.toggle button.active { background: var(--ink); color: var(--bg); }
+
+main { padding: 36px 48px 80px; max-width: 1600px; margin: 0 auto; }
+
+/* Axis section header */
+.axis-section { margin-bottom: 56px; }
+.axis-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 24px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--rule);
+}
+.axis-header .axis-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-fade);
+  font-weight: 600;
+}
+.axis-header h2 {
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.axis-header h2 strong { font-weight: 600; }
+.axis-header .direction-key {
+  display: flex;
+  gap: 18px;
+  font-size: 11px;
+  color: var(--ink-fade);
+}
+.dirkey-item { display: flex; align-items: center; gap: 6px; }
+.dirkey-dot { width: 8px; height: 8px; border-radius: 50%; }
+.dirkey-dot.up { background: var(--amber); }
+.dirkey-dot.down { background: var(--green); }
+.dirkey-dot.fast { background: var(--green); }
+.dirkey-dot.slow { background: var(--amber); }
+
+/* Tile grid */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+.tile {
+  background: var(--surface);
+  padding: 22px 22px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  min-height: 220px;
+}
+
+.tile-head { display: flex; justify-content: space-between; align-items: center; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; }
+.sector-tag {
+  color: var(--ink-fade);
+}
+.status-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: 2px;
+}
+.status-tag .dot { width: 6px; height: 6px; border-radius: 50%; }
+
+.status-quiet { background: transparent; color: var(--ink-fade); border: 1px solid var(--rule); }
+.status-quiet .dot { background: var(--ink-fade); }
+
+.status-approaching { background: var(--warn-soft); color: #7A5A0E; }
+.status-approaching .dot { background: var(--warn); }
+
+.status-breached { background: var(--amber-soft); color: var(--amber); }
+.status-breached .dot { background: var(--amber); }
+
+.status-positive { background: var(--green-soft); color: var(--green); }
+.status-positive .dot { background: var(--green); }
+
+.tile-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+}
+.tile-desc {
+  font-size: 12px;
+  color: var(--ink-fade);
+  line-height: 1.4;
+  margin-top: -6px;
+}
+
+.tile-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-top: 4px;
+}
+.tile-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.tile-unit {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  color: var(--ink-fade);
+  font-weight: 400;
+}
+.tile-change {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  margin-left: auto;
+}
+.change-up { color: var(--amber); }
+.change-down { color: var(--green); }
+.change-flat { color: var(--ink-fade); }
+
+.sparkline {
+  width: 100%;
+  height: 38px;
+  display: block;
+}
+
+.tile-threshold {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-fade);
+  margin-top: 4px;
+  border-top: 1px solid var(--rule-soft);
+  padding-top: 8px;
+}
+.tile-threshold strong { color: var(--ink); font-weight: 500; }
+
+/* Recent events panel */
+.events-panel {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 24px 26px;
+  margin-bottom: 56px;
+}
+.events-panel h3 {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-fade);
+  margin-bottom: 18px;
+  font-weight: 600;
+}
+.event-list { list-style: none; }
+.event-item {
+  display: grid;
+  grid-template-columns: 90px 100px 1fr 110px;
+  gap: 18px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  align-items: baseline;
+}
+.event-item:last-child { border-bottom: none; }
+.event-date {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-fade);
+  letter-spacing: 0.04em;
+}
+.event-sector { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; color: var(--ink-soft); }
+.event-text { font-size: 13px; color: var(--ink); line-height: 1.4; }
+.event-direction {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-align: right;
+  font-family: 'IBM Plex Mono', monospace;
+}
+.dir-up { color: var(--amber); }
+.dir-down { color: var(--green); }
+.dir-slow { color: var(--amber); }
+.dir-fast { color: var(--green); }
+
+/* Today's reading section (top of dashboard) */
+.reading-section {
+  margin-bottom: 60px;
+  padding-bottom: 48px;
+  border-bottom: 2px solid var(--rule);
+}
+.reading-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 32px;
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--rule);
+  flex-wrap: wrap;
+}
+.reading-caveat {
+  max-width: 440px;
+  font-size: 12px;
+  color: var(--ink-soft);
+  line-height: 1.55;
+  background: var(--warn-soft);
+  border-left: 3px solid var(--warn);
+  padding: 10px 14px;
+}
+.reading-caveat strong { color: var(--ink); }
+.reading-caveat em { font-style: italic; color: var(--ink); }
+
+.reading-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  margin-bottom: 28px;
+}
+.summary-card {
+  background: var(--surface);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.summary-label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-fade);
+  font-weight: 600;
+}
+.summary-value {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.summary-detail { font-size: 12px; color: var(--ink-soft); line-height: 1.4; }
+
+/* Density 2x2 */
+.scenarios-density {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr;
+  grid-template-rows: 44px 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  max-width: none;
+  min-height: 420px;
+  margin-bottom: 20px;
+}
+.scenario-cell-density {
+  background: var(--surface);
+  padding: 24px 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  transition: background 0.2s ease;
+}
+.scenario-cell-density.tl { grid-row: 2; grid-column: 2; }
+.scenario-cell-density.tr { grid-row: 2; grid-column: 3; }
+.scenario-cell-density.bl { grid-row: 3; grid-column: 2; }
+.scenario-cell-density.br { grid-row: 3; grid-column: 3; }
+
+.density-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
+.density-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-fade);
+  letter-spacing: 0.1em;
+}
+.density-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 6px;
+  margin-bottom: 6px;
+}
+.density-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.5; max-width: 380px; }
+
+.density-level {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 2px;
+  white-space: nowrap;
+  align-self: flex-start;
+}
+.density-level.high { background: var(--amber-soft); color: var(--amber); }
+.density-level.moderate { background: var(--warn-soft); color: #7A5A0E; }
+.density-level.low { background: var(--rule-soft); color: var(--ink-fade); }
+
+.density-dots {
+  display: flex;
+  gap: 4px;
+  margin-top: 14px;
+}
+.density-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--rule);
+}
+.density-dot.lit { background: var(--ink); }
+.density-dot.lit-high { background: var(--amber); }
+
+.density-signals {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-fade);
+  margin-top: 12px;
+  line-height: 1.6;
+  border-top: 1px solid var(--rule-soft);
+  padding-top: 10px;
+}
+.density-signals strong { color: var(--ink-soft); font-weight: 500; }
+
+.reading-method {
+  font-size: 11px;
+  color: var(--ink-fade);
+  line-height: 1.6;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 14px 18px;
+}
+.reading-method strong { color: var(--ink-soft); font-weight: 600; }
+
+/* Divider between reading and signals */
+.signals-divider {
+  display: flex;
+  align-items: center;
+  margin: 0 0 36px 0;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-fade);
+  font-weight: 600;
+}
+.signals-divider::before, .signals-divider::after {
+  content: "";
+  flex: 1;
+  border-top: 1px solid var(--rule);
+}
+.signals-divider span { padding: 0 18px; }
+
+.scenarios {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr;
+  grid-template-rows: 44px 1fr 1fr;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+  max-width: 980px;
+  min-height: 380px;
+}
+.axis-label {
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-fade);
+  font-weight: 600;
+  padding: 0 14px;
+  text-align: center;
+  line-height: 1.4;
+}
+.axis-label-y {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  grid-row: 2 / span 2;
+  grid-column: 1;
+  padding: 18px 0;
+}
+.axis-label-top { grid-row: 1; grid-column: 2 / span 2; }
+.axis-label-corner { grid-row: 1; grid-column: 1; background: var(--bg); }
+.scenario-cell {
+  background: var(--surface);
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.scenario-num {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-fade);
+  letter-spacing: 0.1em;
+}
+.scenario-name {
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+.scenario-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+.scenario-cell.tl { grid-row: 2; grid-column: 2; }
+.scenario-cell.tr { grid-row: 2; grid-column: 3; }
+.scenario-cell.bl { grid-row: 3; grid-column: 2; }
+.scenario-cell.br { grid-row: 3; grid-column: 3; }
+
+/* Mode B: 12 months view */
+.timeseries-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+  gap: 32px;
+}
+.ts-tile {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 20px 24px 22px;
+}
+.ts-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; gap: 14px; }
+.ts-head-left { display: flex; gap: 10px; align-items: baseline; }
+.ts-sector { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-fade); font-weight: 600; }
+.ts-name { font-size: 14px; font-weight: 600; color: var(--ink); }
+.ts-current { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 500; color: var(--ink); }
+.ts-threshold-info { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink-fade); margin-bottom: 10px; }
+.ts-chart { width: 100%; height: 110px; display: block; }
+.ts-footer { font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink-fade); display: flex; justify-content: space-between; margin-top: 6px; }
+
+.footnote {
+  margin-top: 60px;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-size: 11px;
+  color: var(--ink-fade);
+  line-height: 1.7;
+}
+.footnote strong { color: var(--ink-soft); }
+
+@media (max-width: 720px) {
+  header { padding: 24px 20px; flex-direction: column; align-items: flex-start; }
+  main { padding: 24px 20px 60px; }
+  .title-block h1 { font-size: 24px; }
+  .banner { padding: 10px 20px; font-size: 10px; gap: 10px; }
+  .banner .left { gap: 12px; }
+  .scenarios { grid-template-columns: 80px 1fr 1fr; }
+  .tile-grid { grid-template-columns: 1fr; }
+  .event-item { grid-template-columns: 70px 1fr; grid-template-rows: auto auto; }
+  .event-sector { grid-column: 1; }
+  .event-direction { grid-column: 2; text-align: left; }
+}
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <div class="left">
+    <span>Illustrative data · not live</span>
+    <span class="pill">Prototype v0.1</span>
+  </div>
+  <div>For design review · not for client use</div>
+</div>
+
+<header>
+  <div class="title-block">
+    <div class="eyebrow">Energy & Resilience Lab</div>
+    <h1>Signal <strong>Dashboard</strong></h1>
+  </div>
+  <div class="header-meta">
+    <div class="meta-item">
+      <div class="label">Reading window</div>
+      <div class="value" id="reading-window">Mon 15 Jun 2026</div>
+    </div>
+    <div class="toggle" role="tablist">
+      <button id="mode-today" class="active" onclick="setMode('today')">Today</button>
+      <button id="mode-12mo" onclick="setMode('twelve')">12 months</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- TODAY MODE -->
+  <div id="view-today">
+
+    <!-- TODAY'S READING SUMMARY -->
+    <section class="reading-section">
+      <div class="reading-header">
+        <div>
+          <div class="axis-eyebrow">Today's reading</div>
+          <h2>Where the <strong>signals</strong> are pointing</h2>
+        </div>
+        <div class="reading-caveat">
+          <strong>Indicative only.</strong> The dashboard surfaces which scenarios the signals are <em>most consistent</em> with. It does NOT place position — that judgement stays with the room.
+        </div>
+      </div>
+
+      <div class="reading-summary" id="reading-summary"></div>
+
+      <div class="scenarios-density" id="scenarios-density">
+        <div class="axis-label axis-label-corner"></div>
+        <div class="axis-label axis-label-top">Slower adaptation &nbsp;←&nbsp;&nbsp;&nbsp;&nbsp;Speed of industry adaptation&nbsp;&nbsp;&nbsp;&nbsp;→&nbsp; Faster adaptation</div>
+        <div class="axis-label axis-label-y">Contained &nbsp;←&nbsp;&nbsp;&nbsp;&nbsp; Severity of disruption &nbsp;&nbsp;&nbsp;&nbsp;→&nbsp; Prolonged & severe</div>
+        <div class="scenario-cell-density tl" data-scenario="entrenched"></div>
+        <div class="scenario-cell-density tr" data-scenario="coordinated"></div>
+        <div class="scenario-cell-density bl" data-scenario="fragile"></div>
+        <div class="scenario-cell-density br" data-scenario="rapid"></div>
+      </div>
+
+      <div class="reading-method">
+        <strong>How this is calculated.</strong> Each scenario shows the count of today's signals consistent with its conditions. Breached signals count 1.0; approaching signals count 0.5. Quiet signals contribute to the "contained / not severe" scenarios. The marker dots show relative consistency, not absolute scoring. Click any scenario to see the signals that contributed.
+      </div>
+    </section>
+
+    <!-- THE SIGNALS THAT INFLUENCED IT -->
+    <div class="signals-divider">
+      <span>The signals that drove today's reading</span>
+    </div>
+
+    <!-- VERTICAL AXIS -->
+    <section class="axis-section">
+      <div class="axis-header">
+        <div>
+          <div class="axis-eyebrow">Vertical axis</div>
+          <h2>Severity of <strong>disruption</strong></h2>
+        </div>
+        <div class="direction-key">
+          <div class="dirkey-item"><span class="dirkey-dot up"></span> Pushes severity up</div>
+          <div class="dirkey-item"><span class="dirkey-dot down"></span> Pushes severity down</div>
+        </div>
+      </div>
+      <div class="tile-grid" id="vertical-tiles"></div>
+    </section>
+
+    <!-- HORIZONTAL AXIS -->
+    <section class="axis-section">
+      <div class="axis-header">
+        <div>
+          <div class="axis-eyebrow">Horizontal axis</div>
+          <h2>Speed of industry <strong>adaptation</strong></h2>
+        </div>
+        <div class="direction-key">
+          <div class="dirkey-item"><span class="dirkey-dot fast"></span> Faster adaptation</div>
+          <div class="dirkey-item"><span class="dirkey-dot slow"></span> Slower adaptation</div>
+        </div>
+      </div>
+      <div class="tile-grid" id="horizontal-tiles"></div>
+    </section>
+
+    <!-- RECENT EVENTS -->
+    <div class="events-panel">
+      <h3>Recent events · event-based signals</h3>
+      <ul class="event-list" id="events-list"></ul>
+    </div>
+
+  </div>
+
+  <!-- 12 MONTHS MODE -->
+  <div id="view-twelve" style="display:none">
+    <div class="axis-header">
+      <div>
+        <div class="axis-eyebrow">12-month rolling window</div>
+        <h2>Signals over <strong>time</strong></h2>
+      </div>
+      <div class="direction-key">
+        <div class="dirkey-item"><span class="dirkey-dot up"></span> Threshold breached</div>
+        <div class="dirkey-item"><span class="dirkey-dot down"></span> Within range</div>
+      </div>
+    </div>
+    <div class="timeseries-grid" id="timeseries-grid" style="margin-top: 24px;"></div>
+  </div>
+
+  <div class="footnote">
+    <strong>About this prototype.</strong> Built to test the design of the lab dashboard. All data shown is illustrative, calibrated against current market conditions (June 2026) but not drawn from live feeds. In production, signals would be pulled from named indices: ICE Brent, ICE TTF, S&P Platts JKM, WTO Strait of Hormuz Trade Tracker, Caldara-Iacoviello Geopolitical Risk Index, Drewry World Container Index, ASX 200 VIX, NAB Monthly Business Survey, AEMO Quarterly Energy Dynamics, ABS Capex Intentions Survey, RBA. A consumer-goods tile is deliberately not included; no clean single-index signal exists for this sector and the team should decide whether to add a proxy or leave the gap honest.
+  </div>
+</main>
+
+<script>
+// --- SIGNAL DATA ---
+// Each signal carries: sector, name, desc, current value, unit, change, sparkline (12 weekly points),
+// threshold info, status, twelve-month series, direction key.
+
+const signals = {
+  vertical: [
+    {
+      id: 'brent',
+      sector: 'Power',
+      name: 'Brent crude',
+      desc: 'Global oil benchmark',
+      value: '87.34',
+      unit: 'USD/bbl',
+      change: '+3.2%',
+      changeDir: 'up',
+      directionMeaning: 'up-is-bad',
+      status: 'approaching',
+      statusLabel: 'Approaching',
+      threshold: 'Sustained >$100/bbl · 4 weeks',
+      spark: [64, 65, 68, 78, 85, 88, 91, 89, 86, 84, 86, 87.34],
+      twelve: [62, 63, 65, 64, 66, 78, 85, 88, 91, 89, 84, 87.34],
+      thresholdLine: 100,
+      tsMin: 55,
+      tsMax: 110,
+      tsFmt: v => '$' + v.toFixed(0),
+    },
+    {
+      id: 'ttf',
+      sector: 'Power',
+      name: 'TTF (EU gas)',
+      desc: 'European gas benchmark',
+      value: '52.40',
+      unit: '€/MWh',
+      change: '+5.8%',
+      changeDir: 'up',
+      directionMeaning: 'up-is-bad',
+      status: 'quiet',
+      statusLabel: 'Quiet',
+      threshold: 'Sustained >€75/MWh · 4 weeks',
+      spark: [42, 41, 44, 46, 49, 50, 52, 53, 51, 49, 50, 52.40],
+      twelve: [38, 41, 44, 43, 42, 45, 48, 50, 52, 51, 50, 52.40],
+      thresholdLine: 75,
+      tsMin: 30,
+      tsMax: 80,
+      tsFmt: v => '€' + v.toFixed(0),
+    },
+    {
+      id: 'jkm',
+      sector: 'Power',
+      name: 'JKM (Asian LNG)',
+      desc: 'Asia-Pacific LNG benchmark',
+      value: '18.86',
+      unit: 'USD/MMBtu',
+      change: '+10.8%',
+      changeDir: 'up',
+      directionMeaning: 'up-is-bad',
+      status: 'quiet',
+      statusLabel: 'Quiet',
+      threshold: 'Sustained >$25/MMBtu · 4 weeks',
+      spark: [14, 15, 15, 16, 17, 17, 18, 18, 17, 17, 18, 18.86],
+      twelve: [12, 13, 14, 14, 14, 15, 16, 17, 18, 17, 18, 18.86],
+      thresholdLine: 25,
+      tsMin: 10,
+      tsMax: 28,
+      tsFmt: v => '$' + v.toFixed(0),
+    },
+    {
+      id: 'hormuz',
+      sector: 'Transport',
+      name: 'Hormuz flow vs baseline',
+      desc: 'Strait of Hormuz throughput',
+      value: '78',
+      unit: '% of baseline',
+      change: '−22%',
+      changeDir: 'down',
+      directionMeaning: 'down-is-bad',
+      status: 'breached',
+      statusLabel: 'Breached',
+      threshold: '<80% of baseline · 14 days',
+      spark: [99, 98, 97, 88, 82, 75, 73, 76, 77, 79, 78, 78],
+      twelve: [99, 100, 98, 99, 97, 88, 75, 73, 76, 79, 80, 78],
+      thresholdLine: 80,
+      thresholdDirection: 'below',
+      tsMin: 60,
+      tsMax: 105,
+      tsFmt: v => v.toFixed(0) + '%',
+    },
+    {
+      id: 'drewry',
+      sector: 'Transport',
+      name: 'Drewry container index',
+      desc: 'Global container freight cost',
+      value: '2,840',
+      unit: 'USD/40ft',
+      change: '+4.1%',
+      changeDir: 'up',
+      directionMeaning: 'up-is-bad',
+      status: 'quiet',
+      statusLabel: 'Quiet',
+      threshold: 'Sustained >$3,500 · 4 weeks',
+      spark: [2400, 2450, 2520, 2600, 2680, 2720, 2750, 2800, 2780, 2810, 2820, 2840],
+      twelve: [2200, 2300, 2450, 2400, 2500, 2600, 2700, 2750, 2780, 2820, 2810, 2840],
+      thresholdLine: 3500,
+      tsMin: 2000,
+      tsMax: 3800,
+      tsFmt: v => '$' + (v/1000).toFixed(1) + 'k',
+    },
+    {
+      id: 'gpr',
+      sector: 'All',
+      name: 'Geopolitical Risk Index',
+      desc: 'Caldara-Iacoviello (long-run mean ~100)',
+      value: '187',
+      unit: 'index',
+      change: '+18%',
+      changeDir: 'up',
+      directionMeaning: 'up-is-bad',
+      status: 'breached',
+      statusLabel: 'Breached',
+      threshold: 'Sustained >150 · 4 weeks',
+      spark: [110, 115, 125, 158, 175, 182, 188, 192, 186, 184, 187, 187],
+      twelve: [98, 105, 110, 108, 115, 158, 175, 188, 192, 186, 184, 187],
+      thresholdLine: 150,
+      tsMin: 80,
+      tsMax: 210,
+      tsFmt: v => v.toFixed(0),
+    },
+    {
+      id: 'aud',
+      sector: 'All',
+      name: 'AUD/USD volatility',
+      desc: '30-day rolling move',
+      value: '6.2',
+      unit: '% / 30d',
+      change: '+1.4pp',
+      changeDir: 'up',
+      directionMeaning: 'up-is-bad',
+      status: 'quiet',
+      statusLabel: 'Quiet',
+      threshold: '>10% move · 30 days',
+      spark: [3.1, 3.4, 3.8, 4.6, 5.2, 5.8, 6.1, 6.4, 6.3, 6.0, 6.1, 6.2],
+      twelve: [2.5, 2.8, 3.2, 3.0, 3.4, 4.6, 5.8, 6.4, 6.3, 6.1, 6.1, 6.2],
+      thresholdLine: 10,
+      tsMin: 1,
+      tsMax: 12,
+      tsFmt: v => v.toFixed(1) + '%',
+    },
+  ],
+  horizontal: [
+    {
+      id: 'asxvix',
+      sector: 'FS',
+      name: 'ASX 200 VIX',
+      desc: 'Market fear gauge (long-run avg ~15)',
+      value: '18.4',
+      unit: 'index',
+      change: '+2.1',
+      changeDir: 'up',
+      directionMeaning: 'high-is-slower',
+      status: 'approaching',
+      statusLabel: 'Approaching slower',
+      threshold: '<15 (faster) · >25 (slower) · 4 weeks',
+      spark: [13.2, 13.8, 14.4, 15.8, 17.2, 18.1, 19.0, 18.8, 18.2, 18.0, 18.3, 18.4],
+      twelve: [12, 13, 13.5, 13, 14, 15.8, 18, 19, 18.8, 18.2, 18.1, 18.4],
+      thresholdLine: 25,
+      thresholdLineLow: 15,
+      tsMin: 10,
+      tsMax: 28,
+      tsFmt: v => v.toFixed(0),
+    },
+    {
+      id: 'nab',
+      sector: 'FS',
+      name: 'NAB Business Confidence',
+      desc: 'Monthly survey',
+      value: '−2',
+      unit: 'index',
+      change: '−4pts',
+      changeDir: 'down',
+      directionMeaning: 'low-is-slower',
+      status: 'breached',
+      statusLabel: 'Slower adaptation',
+      threshold: '>+5 (faster) · <0 (slower) · 3 months',
+      spark: [4, 3, 2, 1, -1, -2, -3, -2, -1, -2, -2, -2],
+      twelve: [6, 5, 4, 5, 3, 1, -2, -3, -2, -1, -2, -2],
+      thresholdLine: 5,
+      thresholdLineLow: 0,
+      tsMin: -8,
+      tsMax: 10,
+      tsFmt: v => (v >= 0 ? '+' : '') + v.toFixed(0),
+    },
+    {
+      id: 'aemo',
+      sector: 'Power',
+      name: 'AEMO renewables share',
+      desc: 'NEM generation, faster threshold approaching',
+      value: '42.3',
+      unit: '% of generation',
+      change: '+1.8pp YoY',
+      changeDir: 'up',
+      directionMeaning: 'high-is-faster',
+      status: 'approaching',
+      statusLabel: 'Approaching faster',
+      threshold: '>45% share, growing >2pp YoY',
+      spark: [38.5, 38.8, 39.2, 39.8, 40.2, 40.8, 41.3, 41.6, 41.8, 42.0, 42.1, 42.3],
+      twelve: [37, 38, 38.5, 39, 39.5, 40, 40.5, 41, 41.5, 41.8, 42.0, 42.3],
+      thresholdLine: 45,
+      tsMin: 35,
+      tsMax: 48,
+      tsFmt: v => v.toFixed(0) + '%',
+    },
+    {
+      id: 'capex',
+      sector: 'Infra',
+      name: 'ABS capex intentions',
+      desc: 'Forward-looking investment plans',
+      value: '142.6',
+      unit: 'AUD bn',
+      change: '−1.2%',
+      changeDir: 'down',
+      directionMeaning: 'low-is-slower',
+      status: 'approaching',
+      statusLabel: 'Approaching slower',
+      threshold: 'Growing YoY · structural decisions',
+      spark: [148, 147, 146, 145, 144, 143, 143, 142, 142, 143, 142, 142.6],
+      twelve: [150, 149, 148, 148, 147, 146, 144, 143, 142, 143, 142, 142.6],
+      thresholdLine: 150,
+      tsMin: 135,
+      tsMax: 155,
+      tsFmt: v => '$' + v.toFixed(0) + 'b',
+    },
+  ],
+};
+
+const events = [
+  { date: '14 Jun', sector: 'All', text: 'Reports of US-Iran 14-point draft agreement; Hormuz reopening committed within 30 days if approved.', direction: 'down', dirLabel: 'Severity ↓' },
+  { date: '12 Jun', sector: 'All', text: 'OFAC adds three additional entities to the Iran-related sanctions list following oil shipment seizures.', direction: 'up', dirLabel: 'Severity ↑' },
+  { date: '11 Jun', sector: 'FS', text: 'APRA confirms 2026 climate-risk stress test results published; three of four majors below required capital under severe scenario.', direction: 'fast', dirLabel: 'Adaptation →' },
+  { date: '10 Jun', sector: 'Power', text: 'AEMO confirms 850 MW grid-scale battery commissioned in VIC; financing closed Q1 2026.', direction: 'fast', dirLabel: 'Adaptation →' },
+  { date: '08 Jun', sector: 'Infra', text: 'Major fabrication facility in WA postpones $1.2bn final investment decision, cites uncertainty.', direction: 'slow', dirLabel: 'Adaptation ←' },
+  { date: '06 Jun', sector: 'Transport', text: 'Two major container lines announce extended diversions around Cape of Good Hope through Q3 2026.', direction: 'up', dirLabel: 'Severity ↑' },
+];
+
+// --- RENDER ---
+
+function sparklineSVG(data, opts = {}) {
+  const w = 280, h = 38;
+  const pad = 2;
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+  const range = max - min || 1;
+  const stepX = (w - pad * 2) / (data.length - 1);
+  const pts = data.map((v, i) => {
+    const x = pad + i * stepX;
+    const y = h - pad - ((v - min) / range) * (h - pad * 2);
+    return [x, y];
+  });
+  const linePath = pts.map((p, i) => (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+  const areaPath = linePath + ' L' + pts[pts.length-1][0].toFixed(1) + ',' + h + ' L' + pts[0][0].toFixed(1) + ',' + h + ' Z';
+  const lastPt = pts[pts.length - 1];
+
+  const stroke = opts.color || '#14202E';
+  const fill = opts.fill || 'rgba(20,32,46,0.06)';
+
+  return `<svg class="sparkline" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="${areaPath}" fill="${fill}" stroke="none"/>
+    <path d="${linePath}" fill="none" stroke="${stroke}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${lastPt[0].toFixed(1)}" cy="${lastPt[1].toFixed(1)}" r="2.5" fill="${stroke}"/>
+  </svg>`;
+}
+
+function tileColor(signal) {
+  if (signal.status === 'breached') return { stroke: '#B7611C', fill: 'rgba(183,97,28,0.08)' };
+  if (signal.status === 'approaching') return { stroke: '#7A5A0E', fill: 'rgba(242,210,74,0.18)' };
+  if (signal.status === 'positive') return { stroke: '#046A38', fill: 'rgba(4,106,56,0.08)' };
+  return { stroke: '#14202E', fill: 'rgba(20,32,46,0.06)' };
+}
+
+function renderTile(s) {
+  const col = tileColor(s);
+  const changeClass = s.changeDir === 'up' ? (s.directionMeaning && (s.directionMeaning.includes('bad') || s.directionMeaning.includes('slower')) ? 'change-up' : 'change-down') :
+                      s.changeDir === 'down' ? (s.directionMeaning && (s.directionMeaning.includes('bad') || s.directionMeaning.includes('slower')) ? 'change-down' : 'change-up') :
+                      'change-flat';
+  // Simpler: green for "good direction", amber for "bad direction"
+  // For 'up-is-bad' signals: up=amber, down=green
+  // For 'down-is-bad' signals: up=green, down=amber
+  // For 'high-is-slower' or 'low-is-slower' adaptation signals, color similarly
+  let chCls = 'change-flat';
+  if (s.directionMeaning === 'up-is-bad') chCls = s.changeDir === 'up' ? 'change-up' : 'change-down';
+  else if (s.directionMeaning === 'down-is-bad') chCls = s.changeDir === 'down' ? 'change-up' : 'change-down';
+  else if (s.directionMeaning === 'high-is-slower') chCls = s.changeDir === 'up' ? 'change-up' : 'change-down';
+  else if (s.directionMeaning === 'low-is-slower') chCls = s.changeDir === 'down' ? 'change-up' : 'change-down';
+  else if (s.directionMeaning === 'high-is-faster') chCls = s.changeDir === 'up' ? 'change-down' : 'change-up';
+
+  const statusCls = 'status-' + s.status;
+  return `<div class="tile">
+    <div class="tile-head">
+      <span class="sector-tag">${s.sector}</span>
+      <span class="status-tag ${statusCls}"><span class="dot"></span>${s.statusLabel}</span>
+    </div>
+    <div>
+      <div class="tile-name">${s.name}</div>
+      <div class="tile-desc">${s.desc}</div>
+    </div>
+    <div class="tile-value-row">
+      <div class="tile-value">${s.value}</div>
+      <div class="tile-unit">${s.unit}</div>
+      <div class="tile-change ${chCls}">${s.change}</div>
+    </div>
+    ${sparklineSVG(s.spark, col)}
+    <div class="tile-threshold">Threshold &nbsp; <strong>${s.threshold}</strong></div>
+  </div>`;
+}
+
+function renderTiles() {
+  document.getElementById('vertical-tiles').innerHTML = signals.vertical.map(renderTile).join('');
+  document.getElementById('horizontal-tiles').innerHTML = signals.horizontal.map(renderTile).join('');
+}
+
+function renderEvents() {
+  document.getElementById('events-list').innerHTML = events.map(e => `<li class="event-item">
+    <div class="event-date">${e.date}</div>
+    <div class="event-sector">${e.sector}</div>
+    <div class="event-text">${e.text}</div>
+    <div class="event-direction dir-${e.direction}">${e.dirLabel}</div>
+  </li>`).join('');
+}
+
+// 12-month chart
+function timeseriesSVG(s) {
+  const w = 420, h = 110;
+  const padL = 32, padR = 8, padT = 12, padB = 18;
+  const innerW = w - padL - padR;
+  const innerH = h - padT - padB;
+  const data = s.twelve;
+  const min = s.tsMin, max = s.tsMax;
+  const range = max - min || 1;
+  const stepX = innerW / (data.length - 1);
+
+  const pts = data.map((v, i) => [
+    padL + i * stepX,
+    padT + innerH - ((v - min) / range) * innerH
+  ]);
+  const linePath = pts.map((p, i) => (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join(' ');
+
+  // Threshold line
+  let thresholdEl = '';
+  if (s.thresholdLine !== undefined && s.thresholdLine >= min && s.thresholdLine <= max) {
+    const y = padT + innerH - ((s.thresholdLine - min) / range) * innerH;
+    thresholdEl += `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${w-padR}" y2="${y.toFixed(1)}" stroke="#B7611C" stroke-width="1" stroke-dasharray="3,3"/>
+                    <text x="${w-padR-2}" y="${(y-3).toFixed(1)}" font-family="IBM Plex Mono" font-size="9" fill="#B7611C" text-anchor="end">${s.tsFmt(s.thresholdLine)}</text>`;
+  }
+  if (s.thresholdLineLow !== undefined && s.thresholdLineLow >= min && s.thresholdLineLow <= max) {
+    const y = padT + innerH - ((s.thresholdLineLow - min) / range) * innerH;
+    thresholdEl += `<line x1="${padL}" y1="${y.toFixed(1)}" x2="${w-padR}" y2="${y.toFixed(1)}" stroke="#046A38" stroke-width="1" stroke-dasharray="3,3"/>
+                    <text x="${w-padR-2}" y="${(y-3).toFixed(1)}" font-family="IBM Plex Mono" font-size="9" fill="#046A38" text-anchor="end">${s.tsFmt(s.thresholdLineLow)}</text>`;
+  }
+
+  // Highlight breach areas (where data crosses threshold)
+  let breachAreas = '';
+  if (s.thresholdLine !== undefined) {
+    const breachDir = s.thresholdDirection || 'above';
+    for (let i = 0; i < data.length - 1; i++) {
+      const a = data[i], b = data[i+1];
+      const breached = breachDir === 'above' ? (a > s.thresholdLine || b > s.thresholdLine) : (a < s.thresholdLine || b < s.thresholdLine);
+      if (breached) {
+        const x0 = pts[i][0], x1 = pts[i+1][0];
+        breachAreas += `<rect x="${x0.toFixed(1)}" y="${padT}" width="${(x1-x0).toFixed(1)}" height="${innerH}" fill="rgba(183,97,28,0.06)"/>`;
+      }
+    }
+  }
+
+  // Y-axis labels
+  const yLabels = `<text x="${padL-4}" y="${padT+6}" font-family="IBM Plex Mono" font-size="9" fill="#6B7785" text-anchor="end">${s.tsFmt(max)}</text>
+                   <text x="${padL-4}" y="${padT+innerH+3}" font-family="IBM Plex Mono" font-size="9" fill="#6B7785" text-anchor="end">${s.tsFmt(min)}</text>`;
+
+  // X-axis: months
+  const monthLabels = `<text x="${padL}" y="${h-4}" font-family="IBM Plex Mono" font-size="9" fill="#6B7785">Jul '25</text>
+                       <text x="${w-padR}" y="${h-4}" font-family="IBM Plex Mono" font-size="9" fill="#6B7785" text-anchor="end">Jun '26</text>`;
+
+  return `<svg class="ts-chart" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+    ${breachAreas}
+    ${thresholdEl}
+    <path d="${linePath}" fill="none" stroke="#14202E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${pts[pts.length-1][0].toFixed(1)}" cy="${pts[pts.length-1][1].toFixed(1)}" r="3" fill="#14202E"/>
+    ${yLabels}
+    ${monthLabels}
+  </svg>`;
+}
+
+function renderTimeseries() {
+  const all = [...signals.vertical, ...signals.horizontal];
+  document.getElementById('timeseries-grid').innerHTML = all.map(s => `
+    <div class="ts-tile">
+      <div class="ts-head">
+        <div class="ts-head-left">
+          <span class="ts-sector">${s.sector}</span>
+          <span class="ts-name">${s.name}</span>
+        </div>
+        <span class="ts-current">${s.value} ${s.unit}</span>
+      </div>
+      <div class="ts-threshold-info">${s.threshold}</div>
+      ${timeseriesSVG(s)}
+      <div class="ts-footer">
+        <span>12-month rolling</span>
+        <span>${s.status === 'breached' ? 'Currently breached' : s.status === 'approaching' ? 'Approaching threshold' : 'Within range'}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+function setMode(mode) {
+  const todayBtn = document.getElementById('mode-today');
+  const twelveBtn = document.getElementById('mode-12mo');
+  const todayView = document.getElementById('view-today');
+  const twelveView = document.getElementById('view-twelve');
+
+  if (mode === 'today') {
+    todayBtn.classList.add('active');
+    twelveBtn.classList.remove('active');
+    todayView.style.display = 'block';
+    twelveView.style.display = 'none';
+  } else {
+    todayBtn.classList.remove('active');
+    twelveBtn.classList.add('active');
+    todayView.style.display = 'none';
+    twelveView.style.display = 'block';
+  }
+}
+
+// --- READING SUMMARY ---
+// Calculate "consistency" of today's signals with each of the four scenarios.
+// Each signal that's BREACHED or APPROACHING contributes to scenarios its direction
+// is consistent with. Quiet signals do NOT auto-contribute to "low severity" — absence
+// of evidence is not evidence of absence. Only actively-triggered DOWNWARD signals
+// indicate genuine calming, and we have none in today's data.
+
+function calculateReading() {
+  // Vertical (severity) signals — all in current dataset point upward when triggered
+  let severityUp = 0, severityDown = 0;
+  signals.vertical.forEach(s => {
+    const weight = s.status === 'breached' ? 1.0 : s.status === 'approaching' ? 0.5 : 0;
+    severityUp += weight;
+    // Note: no downward-direction signals in current dataset.
+    // In production, signals like "Brent sustained below stabilisation threshold" or
+    // "Trade routes reopening" would contribute to severityDown.
+  });
+
+  // Horizontal (adaptation) signals — direction comes from the status label
+  let adaptFast = 0, adaptSlow = 0;
+  signals.horizontal.forEach(s => {
+    const weight = s.status === 'breached' ? 1.0 : s.status === 'approaching' ? 0.5 : 0;
+    if (s.statusLabel && s.statusLabel.toLowerCase().includes('faster')) adaptFast += weight;
+    else if (s.statusLabel && s.statusLabel.toLowerCase().includes('slower')) adaptSlow += weight;
+    else if (s.status === 'positive') adaptFast += 1.0;
+  });
+
+  // Each scenario: sum of signals whose direction is consistent with the scenario's conditions
+  // A signal contributes to a scenario only if it's actively pointing in a direction
+  // consistent with that scenario. Quiet signals contribute to nothing.
+  const scores = {
+    entrenched: severityUp + adaptSlow,      // high severity + slow adaptation
+    coordinated: severityUp + adaptFast,     // high severity + fast adaptation
+    fragile: severityDown + adaptSlow,       // low severity + slow adaptation
+    rapid: severityDown + adaptFast,         // low severity + fast adaptation
+  };
+
+  // Determine consistency levels by relative ranking
+  const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+  const max = ranked[0][1];
+  const min = ranked[ranked.length - 1][1];
+  const range = max - min || 1;
+
+  const levels = {};
+  Object.entries(scores).forEach(([k, v]) => {
+    const rel = (v - min) / range;
+    if (rel >= 0.66) levels[k] = 'high';
+    else if (rel >= 0.33) levels[k] = 'moderate';
+    else levels[k] = 'low';
+  });
+
+  return { scores, levels, severityUp, severityDown, adaptFast, adaptSlow, max };
+}
+
+function renderReadingSummary() {
+  const r = calculateReading();
+
+  // Top summary cards
+  const breachedVert = signals.vertical.filter(s => s.status === 'breached').length;
+  const approachingVert = signals.vertical.filter(s => s.status === 'approaching').length;
+  const slowerHoriz = signals.horizontal.filter(s => s.statusLabel && s.statusLabel.toLowerCase().includes('slower')).length;
+  const fasterHoriz = signals.horizontal.filter(s => s.statusLabel && s.statusLabel.toLowerCase().includes('faster')).length;
+
+  document.getElementById('reading-summary').innerHTML = `
+    <div class="summary-card">
+      <div class="summary-label">Disruption signals</div>
+      <div class="summary-value">${breachedVert} <span style="font-size:14px;color:var(--ink-fade)">breached</span></div>
+      <div class="summary-detail">${approachingVert} approaching threshold · ${signals.vertical.length - breachedVert - approachingVert} quiet</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Adaptation signals</div>
+      <div class="summary-value">${slowerHoriz} <span style="font-size:14px;color:var(--ink-fade)">slower</span></div>
+      <div class="summary-detail">${fasterHoriz} approaching faster · ${signals.horizontal.length - slowerHoriz - fasterHoriz} other</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Most consistent with</div>
+      <div class="summary-value" style="font-size:18px;font-family:'Open Sans',sans-serif;font-weight:600">${nameForKey(topKey(r.scores))}</div>
+      <div class="summary-detail">Based on today's signal mix</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Least consistent with</div>
+      <div class="summary-value" style="font-size:18px;font-family:'Open Sans',sans-serif;font-weight:600">${nameForKey(bottomKey(r.scores))}</div>
+      <div class="summary-detail">Signals do not currently support this</div>
+    </div>
+  `;
+
+  // Density 2x2 cells
+  const scenarioData = {
+    entrenched: { num: '01', name: 'Entrenched shock', desc: 'Sustained disruption meets a system unable to adapt.' },
+    coordinated: { num: '02', name: 'Coordinated resilience', desc: 'Hard times accelerate coordinated change.' },
+    fragile: { num: '03', name: 'Fragile stability', desc: 'Pressure eases, but vulnerabilities remain.' },
+    rapid: { num: '04', name: 'Rapid rebalance', desc: 'Disruption is contained, structural reset under way.' },
+  };
+
+  ['entrenched','coordinated','fragile','rapid'].forEach(key => {
+    const el = document.querySelector(`.scenario-cell-density[data-scenario="${key}"]`);
+    const data = scenarioData[key];
+    const level = r.levels[key];
+    const score = r.scores[key];
+
+    // Map score to 5 dots
+    const maxScore = Math.max(...Object.values(r.scores)) || 1;
+    const litCount = Math.round((score / maxScore) * 5);
+    const dots = Array.from({length: 5}, (_, i) =>
+      `<div class="density-dot ${i < litCount ? (level === 'high' ? 'lit-high' : 'lit') : ''}"></div>`
+    ).join('');
+
+    // List signals that ACTIVELY contribute to this scenario (breached or approaching only)
+    let contributingVert = [];
+    if (key === 'entrenched' || key === 'coordinated') {
+      // High-severity scenarios: list active upward severity signals
+      contributingVert = signals.vertical
+        .filter(s => s.status === 'breached' || s.status === 'approaching')
+        .map(s => s.name);
+    }
+    // Low-severity scenarios (fragile, rapid): no downward signals exist in current data
+
+    let contributingHoriz = [];
+    if (key === 'entrenched' || key === 'fragile') {
+      contributingHoriz = signals.horizontal
+        .filter(s => (s.status === 'breached' || s.status === 'approaching') &&
+                     s.statusLabel && s.statusLabel.toLowerCase().includes('slower'))
+        .map(s => s.name);
+    } else {
+      contributingHoriz = signals.horizontal
+        .filter(s => (s.status === 'breached' || s.status === 'approaching' || s.status === 'positive') &&
+                     s.statusLabel && (s.statusLabel.toLowerCase().includes('faster')))
+        .map(s => s.name);
+    }
+
+    const contributing = [...contributingVert, ...contributingHoriz];
+    const contribStr = contributing.length ? contributing.join(' · ') : 'No active signals consistent with this scenario today';
+
+    el.innerHTML = `
+      <div>
+        <div class="density-head">
+          <div>
+            <div class="density-num">${data.num}</div>
+            <div class="density-name">${data.name}</div>
+            <div class="density-desc">${data.desc}</div>
+          </div>
+          <div class="density-level ${level}">${level}</div>
+        </div>
+        <div class="density-dots">${dots}</div>
+      </div>
+      <div class="density-signals">
+        <strong>Signals consistent with this scenario today:</strong><br>${contribStr}
+      </div>
+    `;
+  });
+}
+
+function topKey(scores) {
+  return Object.entries(scores).sort((a,b) => b[1]-a[1])[0][0];
+}
+function bottomKey(scores) {
+  return Object.entries(scores).sort((a,b) => a[1]-b[1])[0][0];
+}
+function nameForKey(k) {
+  return { entrenched: 'Entrenched shock', coordinated: 'Coordinated resilience', fragile: 'Fragile stability', rapid: 'Rapid rebalance' }[k];
+}
+
+renderTiles();
+renderEvents();
+renderTimeseries();
+renderReadingSummary();
+</script>
+
+</body>
+</html>
