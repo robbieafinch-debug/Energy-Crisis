@@ -1,6 +1,6 @@
 # Energy & Resilience Signal Dashboard — Prototype
 
-A single-file HTML dashboard prototype for the Energy Resilience Lab. Built to test the design of the lab dashboard with Struan and the team before any production build.
+A single-file HTML dashboard prototype for the Energy Resilience Lab. Built to test the design of the lab dashboard before any production build.
 
 ## What this is
 
