@@ -1,7 +1,7 @@
 {
   "meta": {
     "readingWindow": "Thu 13 Aug 2026",
-    "lastUpdated": "2026-08-13T12:10:47.446991",
+    "lastUpdated": "2026-08-13T12:13:17.139378",
     "dataMode": "partial-live"
   },
   "vertical": [
@@ -12,14 +12,13 @@
       "desc": "Global oil benchmark",
       "value": "93.26",
       "unit": "USD/bbl",
-      "change": "−10.5%",
+      "change": "+0.0%",
       "changeDir": "up",
       "directionMeaning": "up-is-bad",
       "status": "approaching",
       "statusLabel": "Approaching",
       "threshold": "Sustained >$100/bbl · 4 weeks",
       "spark": [
-        88,
         92,
         99,
         101,
@@ -30,10 +29,10 @@
         104,
         105,
         104.2,
+        93.26,
         93.26
       ],
       "twelve": [
-        64,
         66,
         71,
         80,
@@ -44,6 +43,7 @@
         103,
         104,
         104.2,
+        93.26,
         93.26
       ],
       "thresholdLine": 100,
