@@ -128,6 +128,9 @@ def fetch_gpr():
         return None
 
     def candidate_urls():
+        # The stable, undated export first — this is the reliable one.
+        yield "https://www.matteoiacoviello.com/gpr_files/data_gpr_export.xls"
+        # Dated fallbacks, just in case.
         today = _dt.date.today()
         for back in (0, 1):
             y = today.year
@@ -141,7 +144,7 @@ def fetch_gpr():
         try:
             raw = http_get(url)
         except Exception as e:
-            log(f"GPR: {url.split('/')[-1]} not reachable ({e}); trying older.")
+            log(f"GPR: {url.split('/')[-1]} not reachable ({e}); trying next.")
             continue
         try:
             book = xlrd.open_workbook(file_contents=raw)
@@ -163,6 +166,7 @@ def fetch_gpr():
             for r in range(sheet.nrows - 1, 0, -1):
                 v = sheet.cell_value(r, gpr_col)
                 if isinstance(v, (int, float)) and v:
+                    log(f"GPR: read from {url.split('/')[-1]}")
                     return float(v)
                 if isinstance(v, str) and v.strip() not in ("", "NA", "."):
                     try:
@@ -172,8 +176,8 @@ def fetch_gpr():
             return None
         except Exception as e:
             log(f"GPR: could not parse {url.split('/')[-1]} ({e}).")
-            return None
-    log("GPR: no monthly file found for current or previous month.")
+            continue
+    log("GPR: no file found.")
     return None
 
 RSS_FEEDS = [
