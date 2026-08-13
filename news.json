@@ -1,14 +1,15 @@
 {
   "meta": {
-    "lastUpdated": "2026-08-13T06:00:00+10:00",
+    "lastUpdated": "2026-08-13T12:10:47.446966",
     "dataMode": "illustrative"
   },
   "events": [
-    { "date":"12 Aug", "sector":"All", "text":"OFAC adds three entities to the Iran-related sanctions list following further oil-shipment seizures.", "direction":"up", "dirLabel":"Severity ↑" },
-    { "date":"11 Aug", "sector":"Transport", "text":"Two major container lines confirm extended Cape of Good Hope diversions through Q4 2026.", "direction":"up", "dirLabel":"Severity ↑" },
-    { "date":"09 Aug", "sector":"FS", "text":"APRA publishes 2026 climate stress-test results; three of four majors below required capital under the severe scenario.", "direction":"fast", "dirLabel":"Adaptation →" },
-    { "date":"07 Aug", "sector":"Power", "text":"AEMO confirms 850 MW grid-scale battery commissioned in Victoria, financing closed.", "direction":"fast", "dirLabel":"Adaptation →" },
-    { "date":"05 Aug", "sector":"Infra", "text":"Major WA fabrication facility postpones $1.2bn final investment decision, citing uncertainty.", "direction":"slow", "dirLabel":"Adaptation ←" },
-    { "date":"04 Aug", "sector":"All", "text":"US–Iran back-channel talks reported to resume, though Hormuz flows remain well below baseline.", "direction":"down", "dirLabel":"Severity ↓" }
+    {
+      "date": "13 Aug",
+      "sector": "All",
+      "text": "New Zealand Approves New Oil and Gas Production as Energy Security Concerns Grow (OilPrice.com)",
+      "direction": "up",
+      "dirLabel": "Severity ↑"
+    }
   ]
 }
