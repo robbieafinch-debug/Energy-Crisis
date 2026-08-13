@@ -1,7 +1,7 @@
 {
   "meta": {
     "readingWindow": "Thu 13 Aug 2026",
-    "lastUpdated": "2026-08-13T12:26:55.781567",
+    "lastUpdated": "2026-08-13T12:30:18.492377",
     "dataMode": "partial-live"
   },
   "vertical": [
@@ -19,7 +19,6 @@
       "statusLabel": "Approaching",
       "threshold": "Sustained >$100/bbl · 4 weeks",
       "spark": [
-        99,
         101,
         103,
         105,
@@ -30,10 +29,10 @@
         104.2,
         93.26,
         93.26,
+        93.26,
         93.26
       ],
       "twelve": [
-        71,
         80,
         88,
         96,
@@ -42,6 +41,7 @@
         103,
         104,
         104.2,
+        93.26,
         93.26,
         93.26,
         93.26
@@ -252,16 +252,15 @@
       "sector": "All",
       "name": "Geopolitical Risk Index",
       "desc": "Caldara-Iacoviello (mean ~100)",
-      "value": "196",
+      "value": "153",
       "unit": "index",
-      "change": "+12%",
+      "change": "−22.1%",
       "changeDir": "up",
       "directionMeaning": "up-is-bad",
       "status": "breached",
       "statusLabel": "Breached",
       "threshold": "Sustained >150 · 4 weeks",
       "spark": [
-        140,
         148,
         160,
         175,
@@ -272,10 +271,10 @@
         195,
         194,
         196,
-        196
+        196,
+        152.67
       ],
       "twelve": [
-        98,
         108,
         118,
         135,
@@ -286,7 +285,8 @@
         195,
         194,
         196,
-        196
+        196,
+        152.67
       ],
       "thresholdLine": 150,
       "tsMin": 80,
