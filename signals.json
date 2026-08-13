@@ -1,7 +1,7 @@
 {
   "meta": {
     "readingWindow": "Thu 13 Aug 2026",
-    "lastUpdated": "2026-08-13T12:13:17.139378",
+    "lastUpdated": "2026-08-13T12:26:55.781567",
     "dataMode": "partial-live"
   },
   "vertical": [
@@ -19,7 +19,6 @@
       "statusLabel": "Approaching",
       "threshold": "Sustained >$100/bbl · 4 weeks",
       "spark": [
-        92,
         99,
         101,
         103,
@@ -30,10 +29,10 @@
         105,
         104.2,
         93.26,
+        93.26,
         93.26
       ],
       "twelve": [
-        66,
         71,
         80,
         88,
@@ -43,6 +42,7 @@
         103,
         104,
         104.2,
+        93.26,
         93.26,
         93.26
       ],
