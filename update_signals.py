@@ -120,42 +120,61 @@ def fetch_brent():
         return None
 
 def fetch_gpr():
-    """Caldara-Iacoviello GPR Index. Public data file.
-    Returns the latest monthly GPR value as a float, or None.
-    NOTE: the exact file URL/format can change; if this fails, the signal
-    simply keeps its previous value and the dashboard stays intact."""
-    url = "https://www.matteoiacoviello.com/gpr_files/data_gpr_export.csv"
+    import datetime as _dt
     try:
-        raw = http_get(url).decode("utf-8", errors="replace")
-        reader = csv.DictReader(io.StringIO(raw))
-        rows = list(reader)
-        if not rows:
-            return None
-        # find a column that looks like the headline GPR index
-        cols = reader.fieldnames or []
-        gpr_col = None
-        for c in cols:
-            if c and c.strip().upper() in ("GPR", "GPRD", "GPRH"):
-                gpr_col = c
-                break
-        if gpr_col is None:
-            # fall back to a column literally named GPR-ish
-            for c in cols:
-                if c and "GPR" in c.strip().upper():
-                    gpr_col = c
-                    break
-        if gpr_col is None:
-            log(f"GPR: could not find index column in {cols[:8]}")
-            return None
-        # last non-empty value
-        for row in reversed(rows):
-            v = row.get(gpr_col, "").strip()
-            if v not in ("", "NA", "."):
-                return float(v)
-        return None
+        import xlrd
     except Exception as e:
-        log(f"GPR fetch failed: {e}")
+        log(f"GPR: xlrd not available ({e}); skipping.")
         return None
+
+    def candidate_urls():
+        today = _dt.date.today()
+        for back in (0, 1):
+            y = today.year
+            m = today.month - back
+            if m <= 0:
+                m += 12
+                y -= 1
+            yield f"https://www.matteoiacoviello.com/gpr_files/data_gpr_export_{y}{m:02d}.xls"
+
+    for url in candidate_urls():
+        try:
+            raw = http_get(url)
+        except Exception as e:
+            log(f"GPR: {url.split('/')[-1]} not reachable ({e}); trying older.")
+            continue
+        try:
+            book = xlrd.open_workbook(file_contents=raw)
+            sheet = book.sheet_by_index(0)
+            header = [str(c.value).strip().upper() for c in sheet.row(0)]
+            gpr_col = None
+            for i, name in enumerate(header):
+                if name in ("GPR", "GPRD", "GPRH"):
+                    gpr_col = i
+                    break
+            if gpr_col is None:
+                for i, name in enumerate(header):
+                    if "GPR" in name:
+                        gpr_col = i
+                        break
+            if gpr_col is None:
+                log(f"GPR: no index column in header {header[:8]}")
+                return None
+            for r in range(sheet.nrows - 1, 0, -1):
+                v = sheet.cell_value(r, gpr_col)
+                if isinstance(v, (int, float)) and v:
+                    return float(v)
+                if isinstance(v, str) and v.strip() not in ("", "NA", "."):
+                    try:
+                        return float(v)
+                    except ValueError:
+                        pass
+            return None
+        except Exception as e:
+            log(f"GPR: could not parse {url.split('/')[-1]} ({e}).")
+            return None
+    log("GPR: no monthly file found for current or previous month.")
+    return None
 
 RSS_FEEDS = [
     ("BBC World", "https://feeds.bbci.co.uk/news/world/rss.xml"),
