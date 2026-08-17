@@ -1,15 +1,15 @@
 {
   "meta": {
-    "lastUpdated": "2026-08-16T21:11:21.572852",
+    "lastUpdated": "2026-08-17T21:17:08.321621",
     "dataMode": "illustrative"
   },
   "events": [
     {
-      "date": "16 Aug",
+      "date": "17 Aug",
       "sector": "All",
-      "text": "Erdogan calls for Strait of Hormuz reopening amid oil disruption (Al Jazeera)",
-      "direction": "down",
-      "dirLabel": "Severity ↓"
+      "text": "Russia Receives First Gasoline Cargo From India as Fuel Shortages Spread (OilPrice.com)",
+      "direction": "up",
+      "dirLabel": "Severity ↑"
     }
   ]
 }
