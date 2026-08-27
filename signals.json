@@ -1,7 +1,7 @@
 {
   "meta": {
-    "readingWindow": "Tue 25 Aug 2026",
-    "lastUpdated": "2026-08-25T21:18:26.150773",
+    "readingWindow": "Thu 27 Aug 2026",
+    "lastUpdated": "2026-08-27T00:20:50.211950",
     "dataMode": "partial-live"
   },
   "vertical": [
@@ -10,9 +10,9 @@
       "sector": "Power",
       "name": "Brent crude",
       "desc": "Global oil benchmark",
-      "value": "95.29",
+      "value": "88.24",
       "unit": "USD/bbl",
-      "change": "+0.0%",
+      "change": "−7.4%",
       "changeDir": "up",
       "directionMeaning": "up-is-bad",
       "status": "approaching",
@@ -24,13 +24,13 @@
         93.26,
         93.26,
         93.26,
-        93.26,
         95.29,
         95.29,
         95.29,
         95.29,
         95.29,
-        95.29
+        95.29,
+        88.24
       ],
       "twelve": [
         93.26,
@@ -38,13 +38,13 @@
         93.26,
         93.26,
         93.26,
-        93.26,
         95.29,
         95.29,
         95.29,
         95.29,
         95.29,
-        95.29
+        95.29,
+        88.24
       ],
       "thresholdLine": 100,
       "tsMin": 55,
