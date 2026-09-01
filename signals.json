@@ -1,7 +1,7 @@
 {
   "meta": {
     "readingWindow": "Tue 01 Sep 2026",
-    "lastUpdated": "2026-09-01T00:12:26.813944",
+    "lastUpdated": "2026-09-01T22:54:33.893875",
     "dataMode": "partial-live"
   },
   "vertical": [
@@ -24,7 +24,7 @@
         95.29,
         95.29,
         95.29,
-        95.29,
+        88.24,
         88.24,
         88.24,
         88.24,
@@ -38,7 +38,7 @@
         95.29,
         95.29,
         95.29,
-        95.29,
+        88.24,
         88.24,
         88.24,
         88.24,
@@ -252,13 +252,13 @@
       "sector": "All",
       "name": "Geopolitical Risk Index",
       "desc": "Caldara-Iacoviello (mean ~100)",
-      "value": "153",
+      "value": "118",
       "unit": "index",
-      "change": "−0.2%",
+      "change": "−22.9%",
       "changeDir": "up",
       "directionMeaning": "up-is-bad",
-      "status": "breached",
-      "statusLabel": "Breached",
+      "status": "quiet",
+      "statusLabel": "Quiet",
       "threshold": "The Geopolitical Risk Index stays above 150 for four weeks or longer.",
       "spark": [
         152.67,
@@ -272,7 +272,7 @@
         152.67,
         152.67,
         152.67,
-        152.67
+        117.92
       ],
       "twelve": [
         152.67,
@@ -286,7 +286,7 @@
         152.67,
         152.67,
         152.67,
-        152.67
+        117.92
       ],
       "thresholdLine": 150,
       "tsMin": 80,
