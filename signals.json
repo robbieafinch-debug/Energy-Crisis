@@ -1,7 +1,7 @@
 {
   "meta": {
-    "readingWindow": "Thu 10 Sep 2026",
-    "lastUpdated": "2026-09-10T22:51:00.761907",
+    "readingWindow": "Fri 11 Sep 2026",
+    "lastUpdated": "2026-09-11T22:53:50.230729",
     "dataMode": "partial-live"
   },
   "vertical": [
@@ -12,7 +12,7 @@
       "desc": "Global oil benchmark",
       "value": "109.51",
       "unit": "USD/bbl",
-      "change": "+14.0%",
+      "change": "+0.0%",
       "changeDir": "up",
       "directionMeaning": "up-is-bad",
       "status": "breached",
@@ -21,7 +21,6 @@
       "spark": [
         88.24,
         88.24,
-        88.24,
         96.02,
         96.02,
         96.02,
@@ -30,12 +29,12 @@
         96.02,
         96.02,
         96.02,
+        109.51,
         109.51
       ],
       "twelve": [
         88.24,
         88.24,
-        88.24,
         96.02,
         96.02,
         96.02,
@@ -44,6 +43,7 @@
         96.02,
         96.02,
         96.02,
+        109.51,
         109.51
       ],
       "thresholdLine": 100,
@@ -262,7 +262,7 @@
       "threshold": "The Geopolitical Risk Index stays above 150 for four weeks or longer.",
       "spark": [
         152.67,
-        152.67,
+        117.92,
         117.92,
         117.92,
         117.92,
@@ -276,7 +276,7 @@
       ],
       "twelve": [
         152.67,
-        152.67,
+        117.92,
         117.92,
         117.92,
         117.92,
