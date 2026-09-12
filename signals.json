@@ -1,7 +1,7 @@
 {
   "meta": {
-    "readingWindow": "Fri 11 Sep 2026",
-    "lastUpdated": "2026-09-11T22:53:50.230729",
+    "readingWindow": "Sat 12 Sep 2026",
+    "lastUpdated": "2026-09-12T22:43:12.686125",
     "dataMode": "partial-live"
   },
   "vertical": [
@@ -20,6 +20,19 @@
       "threshold": "Brent crude stays above US$100 a barrel for four weeks or longer.",
       "spark": [
         88.24,
+        96.02,
+        96.02,
+        96.02,
+        96.02,
+        96.02,
+        96.02,
+        96.02,
+        96.02,
+        109.51,
+        109.51,
+        109.51
+      ],
+      "twelve": [
         88.24,
         96.02,
         96.02,
@@ -30,19 +43,6 @@
         96.02,
         96.02,
         109.51,
-        109.51
-      ],
-      "twelve": [
-        88.24,
-        88.24,
-        96.02,
-        96.02,
-        96.02,
-        96.02,
-        96.02,
-        96.02,
-        96.02,
-        96.02,
         109.51,
         109.51
       ],
@@ -261,7 +261,7 @@
       "statusLabel": "Quiet",
       "threshold": "The Geopolitical Risk Index stays above 150 for four weeks or longer.",
       "spark": [
-        152.67,
+        117.92,
         117.92,
         117.92,
         117.92,
@@ -275,7 +275,7 @@
         117.92
       ],
       "twelve": [
-        152.67,
+        117.92,
         117.92,
         117.92,
         117.92,
