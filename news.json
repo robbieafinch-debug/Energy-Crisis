@@ -1,13 +1,20 @@
 {
   "meta": {
-    "lastUpdated": "2026-09-19T22:34:14.761763",
+    "lastUpdated": "2026-09-21T23:44:01.969213",
     "dataMode": "illustrative"
   },
   "events": [
     {
-      "date": "19 Sep",
+      "date": "21 Sep",
       "sector": "All",
-      "text": "Russia’s $118 Billion Arctic Oil Bet Pushes Ahead Despite Sanctions (OilPrice.com)",
+      "text": "New U.S. Sanctions Law Threatens India’s Huge Russian Oil Trade (OilPrice.com)",
+      "direction": "up",
+      "dirLabel": "Severity ↑"
+    },
+    {
+      "date": "21 Sep",
+      "sector": "All",
+      "text": "Record Diesel Prices Raise Fears of Local Fuel Shortages (OilPrice.com)",
       "direction": "up",
       "dirLabel": "Severity ↑"
     }
