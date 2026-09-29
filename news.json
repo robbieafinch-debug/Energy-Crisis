@@ -1,20 +1,13 @@
 {
   "meta": {
-    "lastUpdated": "2026-09-21T23:44:01.969213",
+    "lastUpdated": "2026-09-29T00:44:19.369274",
     "dataMode": "illustrative"
   },
   "events": [
     {
-      "date": "21 Sep",
+      "date": "29 Sep",
       "sector": "All",
-      "text": "New U.S. Sanctions Law Threatens India’s Huge Russian Oil Trade (OilPrice.com)",
-      "direction": "up",
-      "dirLabel": "Severity ↑"
-    },
-    {
-      "date": "21 Sep",
-      "sector": "All",
-      "text": "Record Diesel Prices Raise Fears of Local Fuel Shortages (OilPrice.com)",
+      "text": "The World Is Entering a New Era of Energy Security (OilPrice.com)",
       "direction": "up",
       "dirLabel": "Severity ↑"
     }
