@@ -1,7 +1,7 @@
 {
   "meta": {
-    "readingWindow": "Thu 01 Oct 2026",
-    "lastUpdated": "2026-10-01T00:15:51.298670",
+    "readingWindow": "Fri 02 Oct 2026",
+    "lastUpdated": "2026-10-02T00:20:39.030201",
     "dataMode": "partial-live"
   },
   "vertical": [
@@ -12,7 +12,7 @@
       "desc": "Global oil benchmark",
       "value": "113.96",
       "unit": "USD/bbl",
-      "change": "−0.8%",
+      "change": "+0.0%",
       "changeDir": "up",
       "directionMeaning": "up-is-bad",
       "status": "breached",
@@ -22,7 +22,6 @@
         130.8,
         130.8,
         130.8,
-        130.8,
         114.89,
         114.89,
         114.89,
@@ -30,13 +29,13 @@
         114.89,
         114.89,
         114.89,
+        113.96,
         113.96
       ],
       "twelve": [
         130.8,
         130.8,
         130.8,
-        130.8,
         114.89,
         114.89,
         114.89,
@@ -44,6 +43,7 @@
         114.89,
         114.89,
         114.89,
+        113.96,
         113.96
       ],
       "thresholdLine": 100,
@@ -252,13 +252,13 @@
       "sector": "All",
       "name": "Geopolitical Risk Index",
       "desc": "Caldara-Iacoviello (mean ~100)",
-      "value": "118",
+      "value": "146",
       "unit": "index",
-      "change": "−0.1%",
+      "change": "+23.9%",
       "changeDir": "up",
       "directionMeaning": "up-is-bad",
-      "status": "quiet",
-      "statusLabel": "Quiet",
+      "status": "approaching",
+      "statusLabel": "Approaching",
       "threshold": "The Geopolitical Risk Index stays above 150 for four weeks or longer.",
       "spark": [
         117.92,
@@ -272,7 +272,7 @@
         117.92,
         117.92,
         117.92,
-        117.92
+        146.21
       ],
       "twelve": [
         117.92,
@@ -286,7 +286,7 @@
         117.92,
         117.92,
         117.92,
-        117.92
+        146.21
       ],
       "thresholdLine": 150,
       "tsMin": 80,

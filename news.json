@@ -1,13 +1,13 @@
 {
   "meta": {
-    "lastUpdated": "2026-10-01T00:15:51.298641",
+    "lastUpdated": "2026-10-02T00:20:39.030165",
     "dataMode": "illustrative"
   },
   "events": [
     {
-      "date": "01 Oct",
+      "date": "02 Oct",
       "sector": "All",
-      "text": "Oil Price Forecasts Jump as Hormuz Disruption Drags On (OilPrice.com)",
+      "text": "PM warned Rosebank oil field could breach West Bank sanctions (BBC Business)",
       "direction": "up",
       "dirLabel": "Severity ↑"
     }
