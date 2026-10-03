@@ -1,13 +1,27 @@
 {
   "meta": {
-    "lastUpdated": "2026-10-02T00:20:39.030165",
+    "lastUpdated": "2026-10-03T00:03:45.454098",
     "dataMode": "illustrative"
   },
   "events": [
     {
-      "date": "02 Oct",
+      "date": "03 Oct",
       "sector": "All",
       "text": "PM warned Rosebank oil field could breach West Bank sanctions (BBC Business)",
+      "direction": "up",
+      "dirLabel": "Severity ↑"
+    },
+    {
+      "date": "03 Oct",
+      "sector": "All",
+      "text": "Iranian Oil Starts Flowing to Tajikistan Despite U.S. Sanctions Risk (OilPrice.com)",
+      "direction": "up",
+      "dirLabel": "Severity ↑"
+    },
+    {
+      "date": "03 Oct",
+      "sector": "All",
+      "text": "Alaska LNG Hinges on How Much Asian Buyers Will Pay for Energy Security (OilPrice.com)",
       "direction": "up",
       "dirLabel": "Severity ↑"
     }
