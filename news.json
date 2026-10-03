@@ -1,6 +1,6 @@
 {
   "meta": {
-    "lastUpdated": "2026-10-03T00:03:45.454098",
+    "lastUpdated": "2026-10-03T23:26:09.480879",
     "dataMode": "illustrative"
   },
   "events": [
@@ -15,13 +15,6 @@
       "date": "03 Oct",
       "sector": "All",
       "text": "Iranian Oil Starts Flowing to Tajikistan Despite U.S. Sanctions Risk (OilPrice.com)",
-      "direction": "up",
-      "dirLabel": "Severity ↑"
-    },
-    {
-      "date": "03 Oct",
-      "sector": "All",
-      "text": "Alaska LNG Hinges on How Much Asian Buyers Will Pay for Energy Security (OilPrice.com)",
       "direction": "up",
       "dirLabel": "Severity ↑"
     }
