@@ -1,7 +1,7 @@
 {
   "meta": {
-    "readingWindow": "Sat 14 Nov 2026",
-    "lastUpdated": "2026-11-14T01:07:28.486681",
+    "readingWindow": "Sun 15 Nov 2026",
+    "lastUpdated": "2026-11-15T00:31:46.401460",
     "dataMode": "partial-live"
   },
   "vertical": [
@@ -12,7 +12,7 @@
       "desc": "Global oil benchmark",
       "value": "92.14",
       "unit": "USD/bbl",
-      "change": "−13.9%",
+      "change": "+0.0%",
       "changeDir": "up",
       "directionMeaning": "up-is-bad",
       "status": "approaching",
@@ -20,7 +20,6 @@
       "threshold": "Brent crude stays above US$100 a barrel for four weeks or longer.",
       "spark": [
         123.1,
-        123.1,
         107.03,
         107.03,
         107.03,
@@ -30,11 +29,11 @@
         107.03,
         107.03,
         107.03,
+        92.14,
         92.14
       ],
       "twelve": [
         123.1,
-        123.1,
         107.03,
         107.03,
         107.03,
@@ -44,6 +43,7 @@
         107.03,
         107.03,
         107.03,
+        92.14,
         92.14
       ],
       "thresholdLine": 100,
