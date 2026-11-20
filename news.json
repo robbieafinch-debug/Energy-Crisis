@@ -1,15 +1,22 @@
 {
   "meta": {
-    "lastUpdated": "2026-11-14T01:07:28.486655",
+    "lastUpdated": "2026-11-20T01:57:05.079924",
     "dataMode": "illustrative"
   },
   "events": [
     {
-      "date": "14 Nov",
+      "date": "20 Nov",
       "sector": "All",
-      "text": "How Global Energy Markets Survived Eight Months of Iran War Disruptions (OilPrice.com)",
+      "text": "Hormuz Oil Exports Could Decline amid Inbound Tanker Shortage (OilPrice.com)",
       "direction": "up",
       "dirLabel": "Severity ↑"
+    },
+    {
+      "date": "20 Nov",
+      "sector": "All",
+      "text": "How Energy Security Is Reshaping Global Investment Decisions (OilPrice.com)",
+      "direction": "fast",
+      "dirLabel": "Adaptation →"
     }
   ]
 }
