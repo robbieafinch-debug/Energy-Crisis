@@ -1,22 +1,22 @@
 {
   "meta": {
-    "lastUpdated": "2026-11-20T01:57:05.079924",
+    "lastUpdated": "2026-11-25T03:52:19.892942",
     "dataMode": "illustrative"
   },
   "events": [
     {
-      "date": "20 Nov",
+      "date": "25 Nov",
       "sector": "All",
-      "text": "Hormuz Oil Exports Could Decline amid Inbound Tanker Shortage (OilPrice.com)",
+      "text": "Households braced for soaring energy bills with new price cap to be announced (BBC Business)",
       "direction": "up",
       "dirLabel": "Severity ↑"
     },
     {
-      "date": "20 Nov",
+      "date": "25 Nov",
       "sector": "All",
-      "text": "How Energy Security Is Reshaping Global Investment Decisions (OilPrice.com)",
-      "direction": "fast",
-      "dirLabel": "Adaptation →"
+      "text": "Households braced for soaring energy bills with new price cap to be announced (BBC Business)",
+      "direction": "up",
+      "dirLabel": "Severity ↑"
     }
   ]
 }

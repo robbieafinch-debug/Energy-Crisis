@@ -1,7 +1,7 @@
 {
   "meta": {
-    "readingWindow": "Tue 24 Nov 2026",
-    "lastUpdated": "2026-11-24T05:03:32.953679",
+    "readingWindow": "Wed 25 Nov 2026",
+    "lastUpdated": "2026-11-25T03:52:19.892976",
     "dataMode": "partial-live"
   },
   "vertical": [
@@ -19,12 +19,12 @@
       "statusLabel": "Approaching",
       "threshold": "Brent crude stays above US$100 a barrel for four weeks or longer.",
       "spark": [
-        107.03,
         92.14,
         92.14,
         92.14,
         92.14,
         92.14,
+        92.94,
         92.94,
         92.94,
         92.94,
@@ -33,12 +33,12 @@
         92.94
       ],
       "twelve": [
-        107.03,
         92.14,
         92.14,
         92.14,
         92.14,
         92.14,
+        92.94,
         92.94,
         92.94,
         92.94,
