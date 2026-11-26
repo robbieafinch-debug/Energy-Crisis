@@ -1,20 +1,13 @@
 {
   "meta": {
-    "lastUpdated": "2026-11-25T03:52:19.892942",
+    "lastUpdated": "2026-11-26T03:17:21.903420",
     "dataMode": "illustrative"
   },
   "events": [
     {
-      "date": "25 Nov",
+      "date": "26 Nov",
       "sector": "All",
-      "text": "Households braced for soaring energy bills with new price cap to be announced (BBC Business)",
-      "direction": "up",
-      "dirLabel": "Severity ↑"
-    },
-    {
-      "date": "25 Nov",
-      "sector": "All",
-      "text": "Households braced for soaring energy bills with new price cap to be announced (BBC Business)",
+      "text": "Labor Shortages Could Derail Canada’s Oil and Gas Growth Momentum (OilPrice.com)",
       "direction": "up",
       "dirLabel": "Severity ↑"
     }
