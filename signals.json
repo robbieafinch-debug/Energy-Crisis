@@ -1,7 +1,7 @@
 {
   "meta": {
-    "readingWindow": "Thu 26 Nov 2026",
-    "lastUpdated": "2026-11-26T03:17:21.903441",
+    "readingWindow": "Fri 27 Nov 2026",
+    "lastUpdated": "2026-11-27T03:22:30.524041",
     "dataMode": "partial-live"
   },
   "vertical": [
@@ -12,7 +12,7 @@
       "desc": "Global oil benchmark",
       "value": "91.80",
       "unit": "USD/bbl",
-      "change": "−1.2%",
+      "change": "+0.0%",
       "changeDir": "up",
       "directionMeaning": "up-is-bad",
       "status": "approaching",
@@ -22,7 +22,6 @@
         92.14,
         92.14,
         92.14,
-        92.14,
         92.94,
         92.94,
         92.94,
@@ -30,13 +29,13 @@
         92.94,
         92.94,
         92.94,
+        91.8,
         91.8
       ],
       "twelve": [
         92.14,
         92.14,
         92.14,
-        92.14,
         92.94,
         92.94,
         92.94,
@@ -44,6 +43,7 @@
         92.94,
         92.94,
         92.94,
+        91.8,
         91.8
       ],
       "thresholdLine": 100,
